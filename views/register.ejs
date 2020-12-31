@@ -1,0 +1,27 @@
+
+    <ejs:head>
+        <title>Register</title>
+        <link rel="stylesheet" href="/css/login.css">
+      </ejs:head>
+        <div class="container">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+              <!-- Tabs Titles -->
+          
+              <!-- Icon -->
+              <div class="fadeIn first">
+                <h2>Register</h2>
+              </div>
+          <%if(message){%>
+            <%=message%>
+          <% } %> 
+              <!-- Login Form -->
+              <form method="POST" action="/user/register">
+                <input type="text" id="email" class="fadeIn second" name="email" placeholder="email" required>
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
+                <input type="password" id="confirmPassword" class="fadeIn third" name="confirmPassword" placeholder="confirmPassword" required>
+                <input type="submit" id="btnSubmit" class="fadeIn fourth" value="Register">
+              </form>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,100 @@
+
+<style>
+      .wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+    margin-top: 8%;
+  }
+  
+  .formContent {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  input{
+      margin-top: 8px;
+  }
+</style>
+
+<div class="wrapper">
+    <div class="formcontent">
+        <div class="col-md-12" style="text-align: center;">
+            <button class="btn btn-primary" id="automatic">
+            Automatic
+        </button>
+        <button class="btn btn-primary" id="manual">
+            Manually
+        </button>
+        </div>
+        <h2><% if (message) { %>
+            message
+        <% } %> 
+        </h2>
+            <form action="/token/generatetoken" method="POST" style="display: none;" id="formmanual">
+                <input type="text" class="form-control" name="token" id="token" placeholder="enter token" required>
+                <span class="text-danger"></span>
+                <input type="number" class="form-control" name="limit" id="count" placeholder="enter request limit" required>
+                <button class="btn btn-primary" style="margin-top: 10px;" id="btngenerate">
+                    Generate token
+                </button>
+            </form>
+            <form action="/token/generatetoken" method="POST" style="display: none;" id="formautomatic">
+                <input type="number" class="form-control" name="limit" id="count" placeholder="enter request limit" required>
+                <button class="btn btn-primary" style="margin-top: 10px;">
+                    Generate token
+                </button>
+            </form>
+        
+    </div>
+</div>
+<script>
+    $(function(){
+
+        $("#manual").on('click',function(){
+            $("#formmanual").show();
+            $("#formautomatic").hide();
+        });
+        $("#automatic").on('click',function(){
+            $("#formmanual").hide();
+            $("#formautomatic").show();
+        });
+        $("#btngenerate").on('click',function(e){
+            e.preventDefault();
+            var token=$("#token").val();
+            var limit=$("#count").val();
+            $.ajax({
+                url:"/token/generatetoken",
+                method:"POST",
+                data:{token,limit},
+                cache:false,
+                success:function(res){
+                    console.log(res.token)
+                    if(res.token){
+                        $(".text-danger").text("token already exists")
+                    }
+                    else{
+                        window.location.replace("/token");
+                    }
+                },
+                error:function(){
+                    alert("error")
+                }
+
+            })
+        })
+    })
+    
+</script>

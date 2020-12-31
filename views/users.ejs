@@ -1,0 +1,59 @@
+<div class="row" style="margin: 10px;">
+    <div class="col-md-12">
+  <div class="table-responsive">
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Email</th>
+      <th scope="col">When created</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% if(users!=null||users.Lenght>0){ 
+         users.forEach(user=>{%>
+            <tr>
+                <td><%= user.email %></td>
+                <td><%= user.whenCreated%></td>
+                <td><a onclick="return confirm('Are you sure you want to Delete?')" href="/user/deluser?id=<%= user._id %>">Delete</a></td>
+              </tr>
+        <%}) %> 
+        <%} else { %>
+    <h2>No record found</h2>
+    <%}%>
+  </tbody>
+</table>
+<nav >
+    <% if (pages> 0) { %>
+                <ul class="pagination justify-content-end">
+                    <% if (current == 1) { %>
+                        <li class="disabled page-item"><a class="page-link">First</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/user?page=1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled page-item"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                        <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/user?page=<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="disabled page-item"><a class="page-link">...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="disabled page-item"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/user?page=<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            <% } %>
+</nav>
+  </div>
+    </div>
+</div>
+

@@ -1,0 +1,62 @@
+<div class="row" style="margin: 10px;">
+  <div class="col-md-12">
+<div class="table-responsive">
+<table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Token</th>
+        <th scope="col">Total limit</th>
+        <th scope="col">Remaining limit</th>
+        <th scope="col">When created</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% if(tokens!=null||tokens.Lenght>0){ 
+           tokens.forEach(token=>{%>
+              <tr>
+                  <td><%= token.token %></td>
+                  <td><%= token.requestLimit%></td>
+                  <td><%= token.remainingRequests%></td>
+                  <td><%= token.whenCreated%></td>
+                  <td><a id="btnDel" onclick="return confirm('Are you sure you want to Delete?')" href="/token/deltoken?id=<%= token._id %>">Delete</a></td>
+                </tr>
+          <%}) %> 
+          <%} else { %>
+      <h2>No record found</h2>
+      <%}%>
+    </tbody>
+  </table>
+  <nav >
+    <% if (pages> 0) { %>
+                <ul class="pagination justify-content-end">
+                    <% if (current == 1) { %>
+                        <li class="disabled page-item"><a class="page-link">First</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/token?page=1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled page-item"><a class="page-link">...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                        <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/token?page=<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="disabled page-item"><a class="page-link">...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="disabled page-item"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a class="page-link" href="/token?page=<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            <% } %>
+</nav>
+</div>
+  </div>
+</div>
