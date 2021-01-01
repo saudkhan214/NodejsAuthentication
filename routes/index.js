@@ -1,6 +1,6 @@
 const express=require('express')
 const router= express.Router()
-const token=require('./token')
+const {route}=require('./token')
 const user=require('./user')
 const urlExtracter=require('./urlExtracter')
 const { forwardAuthenticated } = require('../auth');
@@ -11,7 +11,7 @@ router.get('/',forwardAuthenticated,(req,res)=>{
 })
 
 
-router.use('/token',token)
+router.use('/token',route)
 router.use('/user',user)
 router.use('/extractUrl',urlExtracter)
 

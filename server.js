@@ -11,6 +11,7 @@ const flash=require('express-flash')
 const session=require('express-session')
 dotenv.config({path:'./config.env'})
 require('./passport_config')(passport)
+const {refreshToken} =require('./routes/token')
 
 
 const indexRouter=require('./routes/index')
@@ -40,6 +41,15 @@ app.use(function(req,res,next){
     next();
   })
   
+//this function will run every day once to refresh the 
+//token if it is older than 1 month
+var dayInMilliseconds = 1000 * 60 * 60 * 24;
+setInterval(function() {
+    refreshToken();
+     },dayInMilliseconds);
+
+
+
 app.use('/',indexRouter)
 const connectionString=process.env.DATABASE.replace('<PASSWORD>',process.env.DATABASE_PASSWORD);
 //console.log(connectionString)
