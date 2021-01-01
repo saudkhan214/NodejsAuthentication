@@ -23,7 +23,7 @@ module.exports = {
     }
     Token.findOne({token:token}).then(doc=>{
         if(!doc){
-           return res.status(500).send("not autenticated token")
+           return res.status(404).send("not autenticated token")
         }else{
             if(doc.remainingRequests==0){
                return res.status(503).send("token limit exceed please try another one")

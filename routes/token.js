@@ -10,7 +10,7 @@ const moment=require('moment')
      var perPage = 10
     var page = req.query.page || 1
      Token.find({}).skip((perPage * page) - perPage).limit(perPage).sort('-whenCreated').then(docs=>{
-        Token.count().exec(function(err, count){
+        Token.countDocuments().exec(function(err, count){
             if(err){return err}
             docs.forEach(doc=>{
                 //var date = moment(doc.whenCreated).format('YYYY-MM-DD')

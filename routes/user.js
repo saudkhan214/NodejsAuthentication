@@ -13,7 +13,7 @@ router.get('/',ensureAuthenticated,(req,res)=>{
     var perPage = 10
     var page = req.query.page || 1
     User.find({}).skip((perPage * page) - perPage).limit(perPage).sort('-whenCreated').then(doc=>{
-        User.where('email').ne(req.user.email).count().exec(function(err, count){
+        User.where('email').ne(req.user.email).countDocuments().exec(function(err, count){
             if(err){return err}
             doc.forEach(user=>{
                 if(user.email!=req.user.email){
