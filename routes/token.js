@@ -166,7 +166,7 @@ async function GenerateToken()
         
         return result;
     }
-    
+
     const refreshToken = () => {
         Token.find({}).then(docs=>{
             docs.forEach(doc=>{
@@ -174,7 +174,7 @@ async function GenerateToken()
                 var diff=now.getTime()-doc.whenCreated.getTime();
                 var days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 console.log(doc.token+" "+days)
-                if(days==1 || days>1){
+                if(days==30 || days>30){
                     if(doc.remainingRequests!==doc.requestLimit){
                         doc.remainingRequests=doc.requestLimit;
                         doc.save();

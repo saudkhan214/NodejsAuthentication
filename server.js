@@ -26,7 +26,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(express.json())
 app.use(parser.json())
-app.use(parser.urlencoded({ extended: false }))
+app.use(parser.urlencoded({ extended: true }))
 app.use(session({
     secret:'secret',
     resave:true,

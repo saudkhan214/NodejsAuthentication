@@ -22,6 +22,7 @@ router.get('/',authenticateToken,(req,res)=>{
 })
 
 router.post('/',authenticateToken,(req,res)=>{
+    console.log(req.body)
     if(typeof req.body.url=='undefined'|| req.body.url==""){
         return res.status(401).send("no url provided")
     }
