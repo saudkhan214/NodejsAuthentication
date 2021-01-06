@@ -13,7 +13,6 @@ route.get('/',ensureAuthenticated,(req,res)=>{
         Token.countDocuments().exec(function(err, count){
             if(err){return err}
             docs.forEach(doc=>{
-                //var date = moment(doc.whenCreated).format('YYYY-MM-DD')
                 var date = moment(doc.whenCreated).fromNow();
                 
                 var token={};
@@ -22,6 +21,7 @@ route.get('/',ensureAuthenticated,(req,res)=>{
                 token.requestLimit=doc.requestLimit;
                 token.remainingRequests=doc.remainingRequests;
                 token.whenCreated=date;
+                token.appName=doc.appName
                  tokens.push(token)
              })
         res.render('tokens',{tokens,
@@ -37,6 +37,36 @@ route.get('/',ensureAuthenticated,(req,res)=>{
 //add token
 route.get('/newtoken',ensureAuthenticated,(req,res)=>{
     res.render('addtoken',{message:""})
+})
+
+//update token: GET
+route.get('/update/:id',(req,res)=>{
+
+    Token.findOne({_id:req.params.id}).then(doc=>{
+        res.render('tokenUpdate',{token:doc,message:''})
+
+    }).catch(err=>{
+        return err
+    })
+})
+
+//update token: POST
+route.post('/update',(req,res)=>{
+
+    Token.findOne({_id:req.body.id}).then(doc=>{
+        doc.appName=req.body.type;
+        doc.token=req.body.token;
+        doc.requestLimit=req.body.limit;
+        if(doc.requestLimit < doc.remainingRequests){
+            return res.render('tokenUpdate',{token:doc,message:'Total limit cannnot less then remaining limit'})
+        }
+        doc.save().then(result=>{
+            console.log('save')
+            res.redirect('/token')
+        })
+    }).catch(err=>{
+        return err;
+    })
 })
 
 route.get('/deltoken',ensureAuthenticated,(req,res)=>{
@@ -62,6 +92,7 @@ route.post('/generatetoken',ensureAuthenticated,async (req,res)=>{
                     token:req.body.token,
                     requestLimit:req.body.limit,
                     remainingRequests:req.body.limit,
+                    appName:req.body.type,
                     whenCreated:Date.now()
                 })
                 token.save().then(doc=>{
@@ -79,6 +110,7 @@ route.post('/generatetoken',ensureAuthenticated,async (req,res)=>{
         token:key,
         requestLimit:req.body.limit,
         remainingRequests:req.body.limit,
+        appName:req.body.type,
         whenCreated:Date.now()
       })
       token.save().then(doc=>{
@@ -182,7 +214,6 @@ async function GenerateToken()
                 }
             })
         })
-        console.log("helloo")
      }
      
 

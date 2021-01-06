@@ -1,0 +1,74 @@
+<style>
+    .wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8%;
+  
+}
+
+.formcontent {
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  /* text-align: center; */
+}
+
+input{
+    margin-top: 8px;
+}
+label{
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.row{
+    justify-content: center;
+}
+.btn{
+    margin-top: 10px;
+    width: 40%;
+}
+/* @media screen and (max-width: 600px) {
+.wd {
+  width:55%;
+}
+} */
+</style>
+
+
+<div class="wrapper">
+    <div class="formcontent">
+        
+            <form action="/token/update" method="POST">
+                <input name="id" type="hidden" value="<%= token._id %>">
+                <div class="row flex">
+                    
+                    <label class="col-md-2 col-sm-2" for="text">Token:</label>
+                    <input id="text" type="text" class="form-control col-md-10 col-sm-10" value="<%= token.token %>" name="token" id="token" placeholder="enter token" required>
+                    
+                    <label class="col-md-2 col-sm-2" for="text">Limit:</label>
+                    <input type="number" class="form-control col-md-10 col-sm-10" value="<%= token.requestLimit %>" name="limit" id="count" placeholder="enter request limit" required>
+                    <span class="text-danger offset-md-2 col-md-10"> <%= message!==''?message:''%></span>
+                   <!-- <div class="form-group"> -->
+                    <label class="col-md-2 col-sm-2" for="text">Type:</label>
+                    <select name="type" class="form-control col-md-10 col-sm-10" id="sel1" style="margin-top: 8px;" required>
+                      <option value="" selected disabled>Application type</option>
+                      <option value="urlParser" <%= token.appName=="urlParser"?'selected':'' %> >Url parser</option>
+                      <option value="invoice" <%= token.appName=="invoice"?'selected':'' %>>Invoice Generate</option>
+                    </select>
+                  <!-- </div> -->
+               
+                <button class="btn btn-primary" id="btngenerate">
+                    Update
+                </button>
+            </div>
+            </form>
+    </div>
+</div>

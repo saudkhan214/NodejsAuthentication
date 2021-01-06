@@ -4,7 +4,8 @@ var tokenAuthentication = new Schema({
     token: String,
     requestLimit: Number,
     remainingRequests:Number,
-    whenCreated:Date
+    whenCreated:Date,
+    appName:String
   })
 
   module.exports = mongoose.model('TokenAuthentication', tokenAuthentication );

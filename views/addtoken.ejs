@@ -8,54 +8,89 @@
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    margin-top: 8%;
+    margin-left: auto;
+    margin-right: auto;
   }
   
-  .formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
-    background: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
-    position: relative;
-    padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    text-align: center;
+  .formcontent {
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+}
+  .wd{
+    width:17%;
   }
+  label{
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.row{
+    justify-content: center;
+}
   input{
       margin-top: 8px;
   }
+  @media screen and (max-width: 600px) {
+  .wd {
+    width:55%;
+  }
+}
 </style>
 
 <div class="wrapper">
-    <div class="formcontent">
-        <div class="col-md-12" style="text-align: center;">
+    <div class="wd">
+        <div class="col-md-12" style="display:flex;justify-content:space-around;">
             <button class="btn btn-primary" id="automatic">
             Automatic
         </button>
+        
         <button class="btn btn-primary" id="manual">
             Manually
         </button>
         </div>
-        <h2><% if (message) { %>
-            message
-        <% } %> 
-        </h2>
+<hr>
+
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="formcontent">
             <form action="/token/generatetoken" method="POST" style="display: none;" id="formmanual">
-                <input type="text" class="form-control" name="token" id="token" placeholder="enter token" required>
+                <div class="row flex">
+                <label class="col-md-2 col-sm-2">Token:</label>
+                <input type="text" class="form-control col-md-10 col-sm-10" name="token" id="token" placeholder="enter token" required>
                 <span class="text-danger"></span>
-                <input type="number" class="form-control" name="limit" id="count" placeholder="enter request limit" required>
+                <label class="col-md-2 col-sm-2" for="text">Limit:</label>
+                <input type="number" class="form-control col-md-10 col-sm-10" name="limit" id="count" placeholder="enter request limit" required>
+                <label class="col-md-2 col-sm-2" for="text">Type:</label>
+                    <select name="type" class="form-control col-md-10 col-sm-10" id="sel1" style="margin-top: 8px;" required>
+                        <option value="" selected disabled>Application type</option>
+                      <option value="urlParser">Url parser</option>
+                      <option value="invoice">Invoice Generate</option>
+                    </select>
+                 
                 <button class="btn btn-primary" style="margin-top: 10px;" id="btngenerate">
                     Generate token
                 </button>
+                </div>
             </form>
             <form action="/token/generatetoken" method="POST" style="display: none;" id="formautomatic">
-                <input type="number" class="form-control" name="limit" id="count" placeholder="enter request limit" required>
+                <div class="row flex">
+                <label class="col-md-2 col-sm-2">Limit:</label>
+                <input type="number" class="form-control col-md-10 col-sm-10" name="limit" id="count" placeholder="enter request limit" required>
+                
+                <label class="col-md-2 col-sm-2">Type:</label>
+                    <select name="type" class="form-control col-md-10 col-sm-10" id="sel1" style="margin-top: 8px;" required>
+                      <option value="" selected disabled>Application type</option>
+                      <option value="urlParser">Url parser</option>
+                      <option value="invoice">Invoice Generate</option>
+                    </select>
+                 
                 <button class="btn btn-primary" style="margin-top: 10px;">
                     Generate token
                 </button>
+            </div>
             </form>
         
     </div>

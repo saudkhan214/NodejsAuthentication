@@ -25,6 +25,9 @@ module.exports = {
         if(!doc){
            return res.status(404).send("not autenticated token")
         }else{
+          if(doc.appName!=="urlParser"){
+            return res.status(404).send("token not related to this application")
+          }
             if(doc.remainingRequests==0){
                return res.status(503).send("token limit exceed please try another one")
             }

@@ -52,7 +52,6 @@ setInterval(function() {
 
 app.use('/',indexRouter)
 const connectionString=process.env.DATABASE.replace('<PASSWORD>',process.env.DATABASE_PASSWORD);
-//console.log(connectionString)
 app.listen(process.env.PORT|| 5000)
 
 mongose.connect(connectionString,{
