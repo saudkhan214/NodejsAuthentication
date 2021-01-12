@@ -8,6 +8,7 @@
         <th scope="col">Total limit</th>
         <th scope="col">Remaining limit</th>
         <th scope="col">When created</th>
+        <th scope="col">Refreshed At</th>
         <th scope="col">Type</th>
         <th scope="col">Action</th>
       </tr>
@@ -20,6 +21,7 @@
                   <td><%= token.requestLimit%></td>
                   <td><%= token.remainingRequests%></td>
                   <td><%= token.whenCreated%></td>
+                  <td><%= token.refreshAt%></td>
                   <td><%= token.appName!=null?token.appName.toUpperCase():token.appName%></td>
                   <td>
                     <a id="btnDel" onclick="return confirm('Are you sure you want to Delete?')" href="/token/deltoken?id=<%= token._id %>">Delete</a> |

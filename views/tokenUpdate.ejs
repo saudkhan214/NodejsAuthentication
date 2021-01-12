@@ -55,7 +55,10 @@ label{
                     
                     <label class="col-md-2 col-sm-2" for="text">Limit:</label>
                     <input type="number" class="form-control col-md-10 col-sm-10" value="<%= token.requestLimit %>" name="limit" id="count" placeholder="enter request limit" required>
-                    <span class="text-danger offset-md-2 col-md-10"> <%= message!==''?message:''%></span>
+                    <span class="text-danger offset-md-2 col-md-10"> <%= totalLimitMessage!==''?totalLimitMessage:''%></span>
+
+                    <label class="col-md-3 col-sm-3" for="text">Remaining Limit:</label>
+                    <input type="number" class="form-control col-md-9 col-sm-9" value="<%= token.remainingRequests %>" name="remainingRequests" id="count" placeholder="enter remaining request limit" required>
                    <!-- <div class="form-group"> -->
                     <label class="col-md-2 col-sm-2" for="text">Type:</label>
                     <select name="type" class="form-control col-md-10 col-sm-10" id="sel1" style="margin-top: 8px;" required>

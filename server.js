@@ -41,10 +41,10 @@ app.use(function(req,res,next){
     next();
   })
   
-//this function will run every day once to refresh the 
-//token if it is older than 1 month
-var dayInMilliseconds = 1000 * 60 * 60 * 24;
-setInterval(function() {
+//this function will run every 12 hour to refresh the 
+//token if it is older than 30 days
+var dayInMilliseconds = 1000 * 60 * 60 * 12;
+setInterval(async function() {
     refreshToken();
      },dayInMilliseconds);
 

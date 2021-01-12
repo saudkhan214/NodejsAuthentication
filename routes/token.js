@@ -21,6 +21,7 @@ route.get('/',ensureAuthenticated,(req,res)=>{
                 token.requestLimit=doc.requestLimit;
                 token.remainingRequests=doc.remainingRequests;
                 token.whenCreated=date;
+                token.refreshAt= moment(doc.whenCreated, "DD-MM-YYYY").add(30, 'days').format("DD-MM-YYYY");
                 token.appName=doc.appName
                  tokens.push(token)
              })
@@ -40,10 +41,10 @@ route.get('/newtoken',ensureAuthenticated,(req,res)=>{
 })
 
 //update token: GET
-route.get('/update/:id',(req,res)=>{
+route.get('/update/:id',ensureAuthenticated,(req,res)=>{
 
     Token.findOne({_id:req.params.id}).then(doc=>{
-        res.render('tokenUpdate',{token:doc,message:''})
+        res.render('tokenUpdate',{token:doc,totalLimitMessage:''})
 
     }).catch(err=>{
         return err
@@ -51,14 +52,15 @@ route.get('/update/:id',(req,res)=>{
 })
 
 //update token: POST
-route.post('/update',(req,res)=>{
+route.post('/update',ensureAuthenticated,(req,res)=>{
 
     Token.findOne({_id:req.body.id}).then(doc=>{
         doc.appName=req.body.type;
         doc.token=req.body.token;
         doc.requestLimit=req.body.limit;
+        doc.remainingRequests=req.body.remainingRequests;
         if(doc.requestLimit < doc.remainingRequests){
-            return res.render('tokenUpdate',{token:doc,message:'Total limit cannnot less then remaining limit'})
+            return res.render('tokenUpdate',{token:doc,totalLimitMessage:'Total limit cannnot less then remaining limit'})
         }
         doc.save().then(result=>{
             console.log('save')
@@ -205,7 +207,6 @@ async function GenerateToken()
                 var now=new Date();
                 var diff=now.getTime()-doc.whenCreated.getTime();
                 var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                console.log(doc.token+" "+days)
                 if(days==30 || days>30){
                     if(doc.remainingRequests!==doc.requestLimit){
                         doc.remainingRequests=doc.requestLimit;
